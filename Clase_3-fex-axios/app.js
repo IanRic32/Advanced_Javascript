@@ -45,19 +45,18 @@ fetchBtn.addEventListener('click', () => {
 
 // Implementación con Axios
 axiosBtn.addEventListener('click', () => {
-  showLoading();
-  
-  axios.get(apiUrl)
+showLoading();  
+axios.get(apiUrl)
     .then(response => {
-      if (response.data.code === 200) {
+    if (response.data.code === 200) {
         renderCharacters(response.data.data.results);
-      } else {
+    } else {
         throw new Error(response.data.status || 'Error desconocido');
-      }
+    }
     })
     .catch(error => {
-      console.error('Error con Axios:', error);
-      showError(`Hubo un error al obtener los datos: ${error.message}`);
+    console.error('Error con Axios:', error);
+    showError(`Hubo un error al obtener los datos: ${error.message}`);
     });
 });
 
@@ -71,15 +70,8 @@ dataContainer.innerHTML = '';
 characters.forEach(character => {
     const characterElement = document.createElement('div');
     characterElement.className = 'character';
-    try {
-        const imageUrl = character.thumbnail ? `${character.thumbnail.path}.${character.thumbnail.extension}`.replace('http://', 'https://')
-    : 'https://via.placeholder.com/250x250?text=No+Image';
-    }
-    catch (error) {
-        console.error('Error al obtener la imagen:', error);
-        imageUrl = 'https://via.placeholder.com/250x250?text=No+Image';
-    }
-    
+    const imageUrl = character.thumbnail ? `${character.thumbnail.path}.${character.thumbnail.extension}`.replace('http://', 'https://')
+    : 'https://via.placeholder.com/250x250?text=No+Image';//condicional ternaria
     let description = character.description || 'Descripción no disponible';
     if (description.length > 100) {
     description = description.substring(0, 1000) + '...';
