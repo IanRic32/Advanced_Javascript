@@ -67,13 +67,26 @@ button:hover {
     border-bottom: 1px solid #eee;
 }
 
+.title {
+    text-align: center;
+    color: #ed1d24;
+    margin-bottom: 20px;
+    border-radius: 40px;
+    background-color: white;
+    padding: 2px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
+    gap: 10px;
+    justify-content: center;
+}
 .character-info {
     padding: 15px;
 }
 
 .character-info h3 {
     margin: 0 0 10px 0;
-    color: #ed1d24;
+    color: white;
+    text-align: center;
 }
 
 .character-info p {
