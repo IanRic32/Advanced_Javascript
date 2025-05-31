@@ -1,53 +1,110 @@
-// Aquí tienes un código incompleto para tomar como base. Cada función está definida, pero los pasos cruciales aún no están implementados.
+// Configuración inicial
+const mesasDisponibles = 10;
+const resultadoDiv = document.getElementById('resultado');
+const loadingDiv = document.getElementById('loading');
+const nombreInput = document.getElementById('nombre');
+const mesasInput = document.getElementById('mesas');
+const promiseBtn = document.getElementById('promise-btn');
+const asyncBtn = document.getElementById('async-btn');
 
-// Simulando una base de datos de mesas
-const mesasDisponibles = 10;  // Número de mesas disponibles para reservar
+// Función para mostrar resultados
+function mostrarResultado(mensaje, esError = false) {
+    resultadoDiv.textContent = mensaje;
+    resultadoDiv.className = esError ? 'result-container error' : 'result-container success';
+}
 
+// Función para mostrar/ocultar carga
+function toggleLoading(mostrar) {
+    loadingDiv.style.display = mostrar ? 'flex' : 'none';
+}
 
-
-const fetchBtn = document.getElementById('promise');
-
-
-// Función que simula la verificación de disponibilidad de mesas
 function verificarDisponibilidad(mesasSolicitadas) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-        if (mesasDisponibles<=mesasDisponibles){
-            resolve("Mesas Disponibles confirmadas")
-        }else{
-            reject("No hay suficientes mesas Disponibles, intenta mas tarde")
-        }
-    }, 2000);  // Simula un retraso en la verificación (2 segundos)
-  });
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (mesasSolicitadas <= mesasDisponibles) {
+                resolve(`${mesasSolicitadas} mesa(s) reservada(s) con éxito.`);
+            } else {
+                reject(`Lo sentimos, solo tenemos ${mesasDisponibles} mesa(s) disponible(s).`);
+            }
+        }, 2000);
+    });
 }
 
-// Función que simula el envío de un correo de confirmación
 function enviarConfirmacionReserva(nombreCliente) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Completa la lógica aquí: Simula un envío de correo. Usa Math.random() 
-      if (Math.random() > 0.5) {
-        resolve(`Correo de confirmación enviado a ${nombreCliente}`);
-      } else {
-        reject(`Error al enviar el correo a ${nombreCliente}`);
-      }
-      // para simular si el correo se envió correctamente o si ocurrió un error.
-    }, 1500);  // Simula el envío de un correo (1.5 segundos)
-  });
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const exito = Math.random() > 0.3;
+            if (exito) {
+                resolve(`Correo de confirmación enviado a ${nombreCliente}`);
+            } else {
+                reject(`Error al enviar el correo a ${nombreCliente}. Por favor intente más tarde.`);
+            }
+        }, 1500);
+    });
 }
 
-// Función principal para manejar una reserva
-async function hacerReserva(nombreCliente, mesasSolicitadas) {
-  try {
-    console.log("Verificando disponibilidad de mesas...");
-    const disponibilidad = await verificarDisponibilidad(mesasSolicitadas);  // Llama a la función de verificación
+
+function reservarConPromesas() {
+    const nombre = nombreInput.value.trim();
+    const mesas = parseInt(mesasInput.value);
     
-    // Completa el flujo aquí: Si hay mesas disponibles, llama a la función para enviar la confirmación.
-    // Si no hay mesas disponibles o si ocurre un error, captura el error.
-  } catch (error) {
-    console.log("Error:", error);  // Maneja los errores en la promesa
-  }
+    if (!nombre || isNaN(mesas) || mesas < 1) {
+        mostrarResultado('Por favor ingrese un nombre válido y número de mesas (1-10)', true);
+        return;
+    }
+    
+    toggleLoading(true);
+    resultadoDiv.textContent = '';
+    
+    verificarDisponibilidad(mesas)
+        .then(disponibilidad => {
+            mostrarResultado(disponibilidad);
+            return enviarConfirmacionReserva(nombre);
+        })
+        .then(confirmacion => {
+            mostrarResultado(`${resultadoDiv.textContent}\n${confirmacion}`);
+        })
+        .catch(error => {
+            mostrarResultado(error, true);
+        })
+        .finally(() => {
+            toggleLoading(false);
+        });
 }
 
-// Llamada de prueba
-hacerReserva("Juan Pérez", 3);  // Intenta hacer una reserva para 3 personas
+async function reservarConAsync() {
+    const nombre = nombreInput.value.trim();
+    const mesas = parseInt(mesasInput.value);
+    
+    if (!nombre || isNaN(mesas) || mesas < 1) {
+        mostrarResultado('Por favor ingrese un nombre válido y número de mesas (1-10)', true);
+        return;
+    }
+    
+    toggleLoading(true);
+    resultadoDiv.textContent = '';
+    
+    try {
+        const disponibilidad = await verificarDisponibilidad(mesas);
+        mostrarResultado(disponibilidad);
+        
+        const confirmacion = await enviarConfirmacionReserva(nombre);
+        mostrarResultado(`${resultadoDiv.textContent}\n${confirmacion}`);
+    } catch (error) {
+        mostrarResultado(error, true);
+    } finally {
+        toggleLoading(false);
+    }
+}
+
+promiseBtn.addEventListener('click', reservarConPromesas);
+asyncBtn.addEventListener('click', reservarConAsync);
+
+// Validación de entrada
+mesasInput.addEventListener('input', () => {
+    if (mesasInput.value > 10) {
+        mesasInput.value = 10;
+    } else if (mesasInput.value < 1) {
+        mesasInput.value = '';
+    }
+});
