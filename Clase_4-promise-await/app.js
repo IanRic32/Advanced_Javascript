@@ -17,8 +17,6 @@ function verificarDisponibilidad(mesasSolicitadas) {
         }else{
             reject("No hay suficientes mesas Disponibles, intenta mas tarde")
         }
-      // Completa la lógica aquí: Si hay suficientes mesas disponibles, resuelve la promesa, 
-      // de lo contrario, recházala con un mensaje adecuado.
     }, 2000);  // Simula un retraso en la verificación (2 segundos)
   });
 }
@@ -28,6 +26,11 @@ function enviarConfirmacionReserva(nombreCliente) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // Completa la lógica aquí: Simula un envío de correo. Usa Math.random() 
+      if (Math.random() > 0.5) {
+        resolve(`Correo de confirmación enviado a ${nombreCliente}`);
+      } else {
+        reject(`Error al enviar el correo a ${nombreCliente}`);
+      }
       // para simular si el correo se envió correctamente o si ocurrió un error.
     }, 1500);  // Simula el envío de un correo (1.5 segundos)
   });
