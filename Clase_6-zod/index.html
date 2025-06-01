@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro a Óptica Xoloc</title>
+    <title>Registro | Óptica Xoloc</title>
     <script src="https://cdn.jsdelivr.net/npm/zod@3.21.4/lib/index.umd.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/xoloc2.png" type="image/png">
 </head>
 <body>
     <div class="container"> 
         <div class="head">
+            <img src="/xoloc2.png" alt="Logo Óptica Xoloc" id="logo">
             <h1>Registro a Óptica Xoloc</h1>
+            <img src="/xoloc2.png" alt="Logo Óptica Xoloc" id="logo">
         </div>
         <div class="formulario">
             <form id="regi_form">
-                <label for="nombre">Nombre completo:</label>
-                <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required/>
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
+                </div>
                 
-                <label for="correo">Correo Electrónico:</label>
-                <input type="email" id="correo" placeholder="Ej. juan@ejemplo.com" required/>
+                <div class="form-group">
+                    <label for="correo">Correo Electrónico:</label>
+                    <input type="email" id="correo" placeholder="Ej. juan@ejemplo.com" required>
+                </div>
                 
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" placeholder="Mínimo 6 caracteres" required/>
-                <small>Debe contener al menos un número y un carácter especial</small>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" placeholder="Mínimo 6 caracteres" required>
+                    <small>Debe contener al menos: una mayúscula, un número y un carácter especial</small>
+                </div>
                 
                 <button type="submit">Registrarse</button>
             </form>
