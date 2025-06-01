@@ -1,0 +1,10 @@
+{
+  "name": "explorador-planetas",
+  "version": "1.0.0",
+  "scripts": {
+    "explorar": "live-server"
+  },
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}
