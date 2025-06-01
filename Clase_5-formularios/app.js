@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Si todo es válido
         if (formularioValido) {
             alert('¡Registro exitoso! Gracias por registrarte en nuestro evento.');
-            // formulario.submit(); // Descomentar para envío real
+            formulario.submit();
         }
     });
 });

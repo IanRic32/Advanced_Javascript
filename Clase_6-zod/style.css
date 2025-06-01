@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.head{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: greenyellow;
+    margin: 10px;
+    padding: 10px;
+    gap: 10px;
+    width: 70%;
+}
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: lightblue;
+    margin: 10px;
+    padding: 10px;
+    width: 70%;
+}
